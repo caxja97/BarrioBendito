@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamer Oficial - Torneo CS2</title>
+    <style>
+        body { background-color: #0d1117; color: white; font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; overflow: hidden; }
+        .header { padding: 20px; background: #161b22; border-bottom: 2px solid #de4c4c; }
+        #setup { padding: 50px; }
+        input { padding: 12px; border-radius: 5px; border: 1px solid #30363d; background: #010409; color: white; width: 250px; margin-bottom: 10px; }
+        .btn { background: #de4c4c; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        
+        /* Contenedor del Iframe */
+        #iframeContainer { display: none; width: 100vw; height: calc(100vh - 80px); }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>TORNEO CS2 - SAN BERNARDINO</h1>
+    </div>
+
+    <div id="setup">
+        <h2>Panel del Jugador</h2>
+        <p>Escribe tu nombre y selecciona "Capturar" para entrar a la transmisión.</p>
+        <input type="text" id="playerName" placeholder="Nombre del Jugador..."><br><br>
+        <button class="btn" onclick="iniciarCaptura()">COMENZAR CAPTURA</button>
+    </div>
+
+    <div id="iframeContainer">
+        <iframe id="vdoIframe" allow="camera;microphone;display-capture;autoplay;external-production"></iframe>
+    </div>
+
+    <script>
+        function iniciarCaptura() {
+            const name = document.getElementById('playerName').value;
+            if (!name) return alert("Escribe tu nombre");
+
+            const setupDiv = document.getElementById('setup');
+            const container = document.getElementById('iframeContainer');
+            const iframe = document.getElementById('vdoIframe');
+
+            // Configuración de la API
+            // push: nombre, clean: oculta interfaz de VDO, autostart: inicia al cargar
+            const vdoUrl = `https://vdo.ninja/?push=${name}&clean=1&autostart=1&nobanner=1&preview=1&label=${name}`;
+
+            // Cambiamos la vista
+            setupDiv.style.display = 'none';
+            container.style.display = 'block';
+
+            // Cargamos VDO.Ninja dentro del Iframe de nuestra web
+            iframe.src = vdoUrl;
+        }
+    </script>
+</body>
+</html>
