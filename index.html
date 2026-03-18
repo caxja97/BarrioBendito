@@ -3,15 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BarrioBendito - Multicam</title>
+    <title>BarrioBendito - Registro</title>
 <style>
     body {
         background-image: url('https://caxja97.github.io/fondo-torneo.png');
-        background-size: cover; background-position: center; background-attachment: fixed;
-        color: white; font-family: sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh;
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: white; 
+        font-family: sans-serif; 
+        margin: 0; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        min-height: 100vh;
     }
     .container {
-        max-width: 450px; background: rgba(15, 15, 15, 0.9); padding: 40px; border-radius: 20px; border: 3px solid #de4c4c; box-shadow: 0 0 30px rgba(222, 76, 76, 0.5); text-align: center;
+        max-width: 450px; 
+        background: rgba(15, 15, 15, 0.9); 
+        padding: 40px; 
+        border-radius: 20px; 
+        border: 2px solid #de4c4c; 
+        box-shadow: 0 0 30px rgba(222, 76, 76, 0.5); 
+        text-align: center;
     }
     h1 { color: #de4c4c; font-size: 2.2em; text-transform: uppercase; margin-bottom: 20px; }
     input, select {
@@ -73,25 +88,26 @@
             const slot = document.getElementById('playerSlot').value;
             if (!name) return alert("Por favor, escribe tu nombre");
 
+            const fondoUrl = "https://caxja97.github.io/fondo-torneo.png";
             const css = encodeURIComponent(`
-                body { background-image: url('https://caxja97.github.io/fondo-torneo.png') !important; background-size: cover !important; }
-                .button { background: rgba(0,0,0,0.8) !important; border: 2px solid #de4c4c !important; }
-                h2, p, i { color: white !important; text-shadow: 0 0 10px #de4c4c !important; }
+                body { 
+                    background-image: url('${fondoUrl}') !important; 
+                    background-size: cover !important; 
+                    background-position: center !important;
+                    background-attachment: fixed !important;
+                }
+                #main, .main-content, .sub-menu { background: rgba(0,0,0,0.4) !important; }
+                .button { background: rgba(20,20,20,0.8) !important; border: 2px solid #de4c4c !important; border-radius: 15px !important; }
+                h2, p, i, span { color: white !important; text-shadow: 0 0 10px #de4c4c !important; }
             `);
 
             document.getElementById('setup').style.display = 'none';
             document.getElementById('iframeContainer').style.display = 'block';
 
-            let vdoUrl = "";
             const roomID = "barriobendito_2026";
-
-            if (slot === "libre") {
-                // MODO LIBRE: No usa &room ni &push fijo, es una sesión privada
-                vdoUrl = `https://vdo.ninja/?push=${name}_${Math.floor(Math.random()*1000)}&clean=1&autostart=1&css=${css}`;
-            } else {
-                // MODO TORNEO: Entra a la sala oficial para el panel y OBS
-                vdoUrl = `https://vdo.ninja/?push=${slot}&label=${name}&room=${roomID}&clean=1&autostart=1&css=${css}`;
-            }
+            let vdoUrl = (slot === "libre") 
+                ? `https://vdo.ninja/?push=${name}_${Math.floor(Math.random()*1000)}&clean=1&autostart=1&css=${css}`
+                : `https://vdo.ninja/?push=${slot}&label=${name}&room=${roomID}&clean=1&autostart=1&css=${css}`;
             
             document.getElementById('vdoIframe').src = vdoUrl;
         }
