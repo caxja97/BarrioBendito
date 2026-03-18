@@ -2,58 +2,48 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>BarrioBendito - Panel en Vivo</title>
+    <title>BarrioBendito - Panel Oficial 5vs5</title>
 <style>
-    body {
-        background-color: #0a0a0a; background-image: url('https://caxja97.github.io/fondo-torneo.png');
-        background-size: cover; background-attachment: fixed; color: white; font-family: sans-serif; padding: 20px;
+    body, html { 
+        margin: 0; padding: 0; height: 100%; overflow: hidden; 
+        background-color: #000; font-family: 'Segoe UI', sans-serif; 
     }
-    .header { text-align: center; margin-bottom: 30px; }
-    .header h1 { color: #de4c4c; text-transform: uppercase; letter-spacing: 3px; font-size: 3em; margin: 0; }
-    .header a { color: #ccc; text-decoration: none; font-size: 14px; }
-
-    .grid-streams {
-        display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; max-width: 1400px; margin: auto;
-    }
-    .stream-card {
-        background: rgba(0,0,0,0.8); border: 2px solid #de4c4c; border-radius: 15px; overflow: hidden; position: relative; aspect-ratio: 16/9; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .stream-card iframe { width: 100%; height: 100%; border: none; pointer-events: none; opacity: 0.7; transition: 0.3s; }
     
-    /* EXPANSIÓN Y AUDIO MAESTRO VISUAL */
-    .stream-card:hover { transform: scale(1.35); z-index: 100; box-shadow: 0 0 40px #de4c4c; }
-    .stream-card:hover iframe { opacity: 1; }
-
-    .tag-nombre {
-        position: absolute; bottom: 0; background: #de4c4c; color: white; width: 100%; padding: 5px; font-size: 14px; font-weight: bold; text-align: center;
+    /* Barra superior con estilo Neón */
+    .header-bar {
+        position: fixed; top: 0; width: 100%; 
+        background: rgba(222, 76, 76, 0.9);
+        color: white; text-align: center; padding: 12px; 
+        z-index: 100; font-weight: bold; text-transform: uppercase;
+        letter-spacing: 2px; box-shadow: 0 5px 15px rgba(222, 76, 76, 0.4);
     }
+
+    /* Contenedor del Iframe */
+    .iframe-container {
+        width: 100vw; height: 100vh; padding-top: 45px; box-sizing: border-box;
+    }
+
+    iframe { width: 100%; height: 100%; border: none; }
+
+    /* Botón flotante para regresar */
+    .back-link {
+        position: fixed; bottom: 20px; right: 20px; z-index: 101;
+        background: rgba(0, 0, 0, 0.7); color: #de4c4c; 
+        text-decoration: none; padding: 10px 20px; border-radius: 30px;
+        border: 2px solid #de4c4c; font-weight: bold; transition: 0.3s;
+    }
+    .back-link:hover { background: #de4c4c; color: white; }
 </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>BARRIO BENDITO LIVE</h1>
-        <a href="index.html">← Volver al Inicio</a>
+    <div class="header-bar">🔴 EN VIVO: TORNEO BARRIO BENDITO (5 VS 5)</div>
+    
+    <a href="index.html" class="back-link">SALIR DEL PANEL</a>
+
+    <div class="iframe-container">
+        <iframe src="https://vdo.ninja/?room=barriobendito_2026&scene=1&clean=1&autoplay=1&mute=1&include=puesto*&order=1"></iframe>
     </div>
 
-    <div class="grid-streams" id="grid">
-        </div>
-
-    <script>
-        // LISTA DE JUGADORES (Cámbialos por los nombres reales que usen)
-        const jugadores = ["Jugador1", "Jugador2", "Jugador3", "Jugador4", "Jugador5", "Jugador6"];
-
-        const container = document.getElementById('grid');
-        jugadores.forEach(p => {
-            const card = document.createElement('div');
-            card.className = 'stream-card';
-            // mute=1 para que no se sature el audio al entrar
-            card.innerHTML = `
-                <iframe src="https://vdo.ninja/?view=${p}&clean=1&autoplay=1&mute=1"></iframe>
-                <div class="tag-nombre">${p}</div>
-            `;
-            container.appendChild(card);
-        });
-    </script>
 </body>
 </html>
