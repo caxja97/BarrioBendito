@@ -3,72 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BarrioBendito - Multicam</title>
+    <title>BarrioBendito - Inicio</title>
 <style>
     body {
-        background-image: url('fondo-torneo.png');
-        background-size: cover; background-position: center; background-repeat: no-repeat;
-        background-attachment: fixed; color: white; font-family: sans-serif;
-        margin: 0; padding: 20px; text-align: center;
+        background-image: url('https://caxja97.github.io/fondo-torneo.png');
+        background-size: cover; background-position: center; background-attachment: fixed;
+        color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh;
     }
     .container {
-        max-width: 500px; background: rgba(22, 27, 34, 0.9); 
-        padding: 40px; border-radius: 20px; border: 3px solid #de4c4c;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.7); margin: 20px auto;
+        max-width: 450px; background: rgba(15, 15, 15, 0.9); padding: 40px; border-radius: 20px; border: 2px solid #de4c4c; box-shadow: 0 0 30px rgba(222, 76, 76, 0.5); text-align: center;
     }
-    h1 { color: #de4c4c; font-size: 2.5em; margin-bottom: 5px; text-transform: uppercase; }
-    input {
-        padding: 15px; border-radius: 8px; border: 1px solid #30363d;
-        background: rgba(1, 4, 9, 0.7); color: white; width: 100%; 
-        max-width: 300px; margin-bottom: 20px; text-align: center;
+    h1 { color: #de4c4c; font-size: 2.5em; text-transform: uppercase; margin-bottom: 10px; }
+    .btn-main {
+        background: #de4c4c; color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; text-transform: uppercase; transition: 0.3s;
     }
-    .btn {
-        background: #de4c4c; color: white; padding: 18px; border: none;
-        border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%;
-        max-width: 300px; text-transform: uppercase;
-    }
-
-    /* --- ESTILO DEL MURO DE JUGADORES --- */
-    .muro-title { margin-top: 50px; color: #de4c4c; text-transform: uppercase; letter-spacing: 2px; }
-    .grid-jugadores {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 15px; padding: 20px; max-width: 1200px; margin: auto;
-    }
-    .card-stream {
-        background: rgba(0,0,0,0.8); border: 2px solid #de4c4c;
-        border-radius: 10px; overflow: hidden; position: relative;
-        aspect-ratio: 16/9; transition: transform 0.3s ease, z-index 0s;
-    }
-    .card-stream iframe { width: 100%; height: 100%; border: none; pointer-events: none; }
+    .btn-main:hover { background: #ff5e5e; transform: scale(1.03); }
     
-    /* Efecto de expansión y sonido al pasar el mouse */
-    .card-stream:hover {
-        transform: scale(1.4); z-index: 999;
-        box-shadow: 0 0 20px #de4c4c;
+    /* BOTÓN PARA IR AL PANEL EN VIVO */
+    .btn-live {
+        display: inline-block; margin-top: 25px; padding: 12px 25px; border: 2px solid #00ff88; color: #00ff88; text-decoration: none; border-radius: 50px; font-weight: bold; text-transform: uppercase; font-size: 14px; transition: 0.3s; box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
     }
+    .btn-live:hover { background: #00ff88; color: black; box-shadow: 0 0 20px #00ff88; }
 
-    .nombre-tag {
-        position: absolute; bottom: 0; width: 100%;
-        background: rgba(222, 76, 76, 0.9); font-size: 12px; font-weight: bold;
-    }
-
-    #iframeContainer { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; background: black; z-index: 1000; }
+    #iframeContainer { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1000; }
+    iframe { width: 100%; height: 100%; border: none; }
 </style>
 </head>
 <body>
 
-    <div id="setup">
-        <div class="container">
-            <h1>BarrioBendito</h1>
-            <p>Panel de Multicam para el Torneo</p>
-            <input type="text" id="playerName" placeholder="Tu nombre de jugador...">
-            <button class="btn" onclick="iniciarCaptura()">COMPARTIR MI PANTALLA</button>
-        </div>
-
-        <h2 class="muro-title">🎥 Jugadores en Vivo</h2>
-        <div class="grid-jugadores" id="muroGrid">
-            </div>
+    <div id="setup" class="container">
+        <h1>BarrioBendito</h1>
+        <p>Ingresa tu nombre para compartir pantalla</p>
+        <input type="text" id="playerName" placeholder="Nombre del Jugador..." style="width: 80%; padding: 12px; margin-bottom: 15px; border-radius: 5px; border: none; text-align: center;">
+        <button class="btn-main" onclick="iniciarCaptura()">Transmitir Juego</button>
+        
+        <br>
+        <a href="panel.html" class="btn-live">🔴 VER TORNEO EN VIVO</a>
     </div>
 
     <div id="iframeContainer">
@@ -76,36 +46,13 @@
     </div>
 
     <script>
-        // --- LISTA DE JUGADORES (Edita estos nombres para que coincidan con los del torneo) ---
-        const listaJugadores = ["Jugador1", "Jugador2", "Jugador3", "Jugador4"]; 
-
-        const muro = document.getElementById('muroGrid');
-        listaJugadores.forEach(p => {
-            const card = document.createElement('div');
-            card.className = 'card-stream';
-            // Cargamos el stream silenciado por defecto para evitar caos de audio
-            const streamUrl = `https://vdo.ninja/?view=${p}&clean=1&autoplay=1&mute=1`;
-            card.innerHTML = `
-                <iframe src="${streamUrl}"></iframe>
-                <div class="nombre-tag">${p}</div>
-            `;
-            muro.appendChild(card);
-        });
-
         function iniciarCaptura() {
             const name = document.getElementById('playerName').value;
-            if (!name) return alert("Escribe tu nombre primero");
-
-            const customCss = encodeURIComponent(`
-                body { background-image: url('https://caxja97.github.io/fondo-torneo.png') !important; background-size: cover !important; }
-                .button { background: rgba(20,20,20,0.8) !important; border: 2px solid #de4c4c !important; }
-                h2, i, p { color: white !important; text-shadow: 0 0 5px #de4c4c !important; }
-            `);
-
-            const vdoUrl = `https://vdo.ninja/?push=${name}&clean=1&autostart=1&css=${customCss}`;
+            if (!name) return alert("Escribe tu nombre");
+            const css = encodeURIComponent("body{background-image:url('https://caxja97.github.io/fondo-torneo.png')!important;background-size:cover!important;}.button{background:rgba(0,0,0,0.8)!important;border:2px solid #de4c4c!important;}h2,p{color:white!important;}");
             document.getElementById('setup').style.display = 'none';
             document.getElementById('iframeContainer').style.display = 'block';
-            document.getElementById('vdoIframe').src = vdoUrl;
+            document.getElementById('vdoIframe').src = `https://vdo.ninja/?push=${name}&clean=1&autostart=1&css=${css}`;
         }
     </script>
 </body>
