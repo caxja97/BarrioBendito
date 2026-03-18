@@ -3,56 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BarrioBendito - Inicio</title>
+    <title>BarrioBendito - Multicam</title>
 <style>
     body {
         background-image: url('https://caxja97.github.io/fondo-torneo.png');
         background-size: cover; background-position: center; background-attachment: fixed;
-        color: white; font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh;
+        color: white; font-family: sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh;
     }
     .container {
-        max-width: 450px; background: rgba(15, 15, 15, 0.9); padding: 40px; border-radius: 20px; border: 2px solid #de4c4c; box-shadow: 0 0 30px rgba(222, 76, 76, 0.5); text-align: center;
+        max-width: 450px; background: rgba(15, 15, 15, 0.9); padding: 40px; border-radius: 20px; border: 3px solid #de4c4c; box-shadow: 0 0 30px rgba(222, 76, 76, 0.5); text-align: center;
     }
-    h1 { color: #de4c4c; font-size: 2.5em; text-transform: uppercase; margin-bottom: 10px; }
+    h1 { color: #de4c4c; font-size: 2.2em; text-transform: uppercase; margin-bottom: 20px; }
+    input, select {
+        padding: 12px; border-radius: 8px; border: 1px solid #30363d;
+        background: rgba(1, 4, 9, 0.8); color: white; width: 100%; 
+        margin-bottom: 20px; text-align: center; box-sizing: border-box; font-size: 15px;
+    }
     .btn-main {
-        background: #de4c4c; color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; text-transform: uppercase; transition: 0.3s;
+        background: #de4c4c; color: white; padding: 18px; border: none;
+        border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%;
+        text-transform: uppercase; transition: 0.3s; font-size: 16px;
     }
-    .btn-main:hover { background: #ff5e5e; transform: scale(1.03); }
-    
-    /* BOTÓN PARA IR AL PANEL EN VIVO */
+    .btn-main:hover { background: #ff5e5e; transform: scale(1.02); }
     .btn-live {
-        display: inline-block; margin-top: 25px; padding: 12px 25px; border: 2px solid #00ff88; color: #00ff88; text-decoration: none; border-radius: 50px; font-weight: bold; text-transform: uppercase; font-size: 14px; transition: 0.3s; box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        display: inline-block; margin-top: 25px; padding: 10px 20px; border: 2px solid #00ff88;
+        color: #00ff88; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 13px;
     }
-    .btn-live:hover { background: #00ff88; color: black; box-shadow: 0 0 20px #00ff88; }
-
     #iframeContainer { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1000; }
-    iframe { width: 100%; height: 100%; border: none; }
 </style>
 </head>
 <body>
 
     <div id="setup" class="container">
         <h1>BarrioBendito</h1>
-        <p>Ingresa tu nombre para compartir pantalla</p>
-        <input type="text" id="playerName" placeholder="Nombre del Jugador..." style="width: 80%; padding: 12px; margin-bottom: 15px; border-radius: 5px; border: none; text-align: center;">
-        <button class="btn-main" onclick="iniciarCaptura()">Transmitir Juego</button>
+        <p>Selecciona tu modo de transmisión</p>
         
+        <input type="text" id="playerName" placeholder="Tu Nickname...">
+        
+        <select id="playerSlot">
+            <optgroup label="TORNEO OFICIAL (Público)">
+                <option value="puesto1">Puesto 1 (Equipo A)</option>
+                <option value="puesto2">Puesto 2 (Equipo A)</option>
+                <option value="puesto3">Puesto 3 (Equipo A)</option>
+                <option value="puesto4">Puesto 4 (Equipo A)</option>
+                <option value="puesto5">Puesto 5 (Equipo A)</option>
+                <option value="puesto6">Puesto 1 (Equipo B)</option>
+                <option value="puesto7">Puesto 2 (Equipo B)</option>
+                <option value="puesto8">Puesto 3 (Equipo B)</option>
+                <option value="puesto9">Puesto 4 (Equipo B)</option>
+                <option value="puesto10">Puesto 5 (Equipo B)</option>
+            </optgroup>
+            <optgroup label="EXTRAS / LIBRE (Privado)">
+                <option value="libre">Uso Libre (No aparece en el panel)</option>
+            </optgroup>
+        </select>
+
+        <button class="btn-main" onclick="iniciarCaptura()">TRANSMITIR AHORA</button>
         <br>
-        <a href="panel.html" class="btn-live">🔴 VER TORNEO EN VIVO</a>
+        <a href="panel.html" class="btn-live">🔴 VER PANEL EN VIVO (10 PUESTOS)</a>
     </div>
 
     <div id="iframeContainer">
-        <iframe id="vdoIframe" allow="camera;microphone;display-capture;autoplay"></iframe>
+        <iframe id="vdoIframe" allow="camera;microphone;display-capture;autoplay" style="width:100%; height:100%; border:none;"></iframe>
     </div>
 
     <script>
         function iniciarCaptura() {
             const name = document.getElementById('playerName').value;
-            if (!name) return alert("Escribe tu nombre");
-            const css = encodeURIComponent("body{background-image:url('https://caxja97.github.io/fondo-torneo.png')!important;background-size:cover!important;}.button{background:rgba(0,0,0,0.8)!important;border:2px solid #de4c4c!important;}h2,p{color:white!important;}");
+            const slot = document.getElementById('playerSlot').value;
+            if (!name) return alert("Por favor, escribe tu nombre");
+
+            const css = encodeURIComponent(`
+                body { background-image: url('https://caxja97.github.io/fondo-torneo.png') !important; background-size: cover !important; }
+                .button { background: rgba(0,0,0,0.8) !important; border: 2px solid #de4c4c !important; }
+                h2, p, i { color: white !important; text-shadow: 0 0 10px #de4c4c !important; }
+            `);
+
             document.getElementById('setup').style.display = 'none';
             document.getElementById('iframeContainer').style.display = 'block';
-            document.getElementById('vdoIframe').src = `https://vdo.ninja/?push=${name}&clean=1&autostart=1&css=${css}`;
+
+            let vdoUrl = "";
+            const roomID = "barriobendito_2026";
+
+            if (slot === "libre") {
+                // MODO LIBRE: No usa &room ni &push fijo, es una sesión privada
+                vdoUrl = `https://vdo.ninja/?push=${name}_${Math.floor(Math.random()*1000)}&clean=1&autostart=1&css=${css}`;
+            } else {
+                // MODO TORNEO: Entra a la sala oficial para el panel y OBS
+                vdoUrl = `https://vdo.ninja/?push=${slot}&label=${name}&room=${roomID}&clean=1&autostart=1&css=${css}`;
+            }
+            
+            document.getElementById('vdoIframe').src = vdoUrl;
         }
     </script>
 </body>
