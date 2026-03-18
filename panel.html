@@ -2,48 +2,22 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>BarrioBendito - Panel Oficial 5vs5</title>
+    <title>BarrioBendito - Panel Oficial</title>
 <style>
-    body, html { 
-        margin: 0; padding: 0; height: 100%; overflow: hidden; 
-        background-color: #000; font-family: 'Segoe UI', sans-serif; 
-    }
-    
-    /* Barra superior con estilo Neón */
+    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #000; font-family: sans-serif; }
     .header-bar {
-        position: fixed; top: 0; width: 100%; 
-        background: rgba(222, 76, 76, 0.9);
-        color: white; text-align: center; padding: 12px; 
-        z-index: 100; font-weight: bold; text-transform: uppercase;
-        letter-spacing: 2px; box-shadow: 0 5px 15px rgba(222, 76, 76, 0.4);
+        position: fixed; top: 0; width: 100%; background: rgba(222, 76, 76, 0.9);
+        color: white; text-align: center; padding: 12px; z-index: 100; font-weight: bold; text-transform: uppercase;
+        letter-spacing: 2px; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     }
-
-    /* Contenedor del Iframe */
-    .iframe-container {
-        width: 100vw; height: 100vh; padding-top: 45px; box-sizing: border-box;
-    }
-
-    iframe { width: 100%; height: 100%; border: none; }
-
-    /* Botón flotante para regresar */
-    .back-link {
-        position: fixed; bottom: 20px; right: 20px; z-index: 101;
-        background: rgba(0, 0, 0, 0.7); color: #de4c4c; 
-        text-decoration: none; padding: 10px 20px; border-radius: 30px;
-        border: 2px solid #de4c4c; font-weight: bold; transition: 0.3s;
-    }
-    .back-link:hover { background: #de4c4c; color: white; }
+    iframe { width: 100vw; height: 100vh; border: none; padding-top: 45px; box-sizing: border-box; }
+    .back { position: fixed; bottom: 20px; left: 20px; z-index: 101; color: white; text-decoration: none; background: rgba(0,0,0,0.6); padding: 8px 15px; border-radius: 5px; border: 1px solid #de4c4c; font-size: 14px; }
 </style>
 </head>
 <body>
-
+    <a href="index.html" class="back">← VOLVER AL REGISTRO</a>
     <div class="header-bar">🔴 EN VIVO: TORNEO BARRIO BENDITO (5 VS 5)</div>
     
-    <a href="index.html" class="back-link">SALIR DEL PANEL</a>
-
-    <div class="iframe-container">
-        <iframe src="https://vdo.ninja/?room=barriobendito_2026&scene=1&clean=1&autoplay=1&mute=1&include=puesto*&order=1"></iframe>
-    </div>
-
+    <iframe src="https://vdo.ninja/?room=barriobendito_2026&scene=1&clean=1&autoplay=1&mute=1&include=puesto*&order=1"></iframe>
 </body>
 </html>
