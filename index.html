@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BarrioBendito - Multicam</title>
 <style>
+    /* --- TU ESTILO BASE (LIGERAMENTE AJUSTADO) --- */
     body {
-        background-image: url('fondo-torneo.png');
+        /* Imagen de fondo principal de la web */
+        background-image: url('https://caxja97.github.io/fondo-torneo.png');
         background-size: cover; 
         background-position: center; 
         background-repeat: no-repeat;
-        background-attachment: fixed;
+        background-attachment: fixed; /* Mantiene el fondo fijo al hacer scroll */
         color: white;
-        font-family: sans-serif;
+        font-family: 'Segoe UI', sans-serif; /* Fuente un poco más moderna */
         text-align: center;
         margin: 0;
-        padding: 20px;
+        padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -23,42 +25,47 @@
     }
     .container {
         max-width: 500px;
-        background: rgba(22, 27, 34, 0.85); 
+        background: rgba(22, 27, 34, 0.9); /* Más opaco para leer mejor */
         padding: 40px;
         border-radius: 20px;
         border: 3px solid #de4c4c;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.7); 
+        box-shadow: 0 0 25px rgba(222, 76, 76, 0.6); /* Sombra neón */
     }
-    h1 { color: #de4c4c; font-size: 2.5em; margin-bottom: 5px; }
-    p { color: #ccc; margin-bottom: 30px; }
+    h1 { color: #de4c4c; font-size: 2.8em; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 2px; }
+    p { color: #ccc; margin-bottom: 35px; }
     input {
-        padding: 15px;
-        border-radius: 8px;
-        border: 1px solid #30363d;
-        background: rgba(1, 4, 9, 0.7);
+        padding: 18px;
+        border-radius: 10px;
+        border: 2px solid #30363d;
+        background: rgba(1, 4, 9, 0.8);
         color: white;
         width: 100%; 
-        max-width: 300px; 
+        max-width: 320px; 
         margin-bottom: 25px;
         box-sizing: border-box; 
         font-size: 16px;
+        text-align: center;
     }
+    input:focus { border-color: #de4c4c; outline: none; box-shadow: 0 0 10px rgba(222, 76, 76, 0.5); }
     .btn {
         background: #de4c4c;
         color: white;
         padding: 18px;
         border: none;
-        border-radius: 8px;
+        border-radius: 10px;
         cursor: pointer;
         font-weight: bold;
         width: 100%;
-        max-width: 300px;
+        max-width: 320px;
         font-size: 16px;
         text-transform: uppercase;
-        transition: background-color 0.3s ease;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
     }
-    .btn:hover { background: #ff5e5e; }
-    #iframeContainer { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; background: black; }
+    .btn:hover { background: #ff5e5e; transform: scale(1.02); }
+    
+    /* --- ESTILOS PARA EL IFRAME --- */
+    #iframeContainer { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; }
     iframe { width: 100%; height: 100%; border: none; }
 </style>
 </head>
@@ -69,7 +76,7 @@
             <h1>BarrioBendito</h1>
             <p>Panel de Multicam para el Torneo</p>
             <input type="text" id="playerName" placeholder="Tu nombre de jugador..."><br>
-            <button class="btn" onclick="iniciarCaptura()">COMPARTIR PANTALLA / JUEGO</button>
+            <button class="btn" onclick="iniciarCaptura()">ENTRAR AL TORNEO</button>
         </div>
     </div>
 
@@ -82,31 +89,91 @@
             const name = document.getElementById('playerName').value;
             if (!name) return alert("Escribe tu nombre primero");
 
-            // CSS personalizado para que VDO.Ninja se vea como BarrioBendito
+            // --- CSS DEFINITIVO PARA PERSONALIZAR TODO VDO.NINJA ---
             const customCss = `
+                /* 1. Fondo de toda la página de VDO.Ninja con tu imagen */
                 body { 
                     background-image: url('https://caxja97.github.io/fondo-torneo.png') !important;
                     background-size: cover !important;
                     background-position: center !important;
+                    background-attachment: fixed !important;
                     color: white !important;
                 }
-                #main { background: rgba(0,0,0,0.7) !important; }
+                #main { background: rgba(0,0,0,0.6) !important; } /* Capa oscura para contraste */
+
+                /* 2. Personalización de las tarjetas principales (Cámara/Pantalla) */
                 .button { 
-                    background: rgba(222, 76, 76, 0.1) !important; 
-                    border: 2px solid #de4c4c !important; 
-                    border-radius: 15px !important;
-                    box-shadow: 0 0 15px rgba(222, 76, 76, 0.5) !important;
+                    /* Truco: Usamos la misma imagen de fondo para que parezca estar 'dentro' de la tarjeta */
+                    background-image: url('https://caxja97.github.io/fondo-torneo.png') !important;
+                    background-size: cover !important;
+                    background-position: center !important;
+                    background-color: transparent !important; /* Quita el gris */
+                    
+                    /* Estilo Neón */
+                    border: 3px solid #de4c4c !important; 
+                    border-radius: 20px !important;
+                    box-shadow: 0 0 20px rgba(222, 76, 76, 0.7) !important;
+                    transition: all 0.3s ease !important;
                 }
-                .button:hover { background: rgba(222, 76, 76, 0.3) !important; }
-                h2, i { color: white !important; text-shadow: 0 0 10px #de4c4c !important; }
-                svg { fill: white !important; }
+                .button:hover { 
+                    transform: scale(1.03) !important;
+                    box-shadow: 0 0 35px rgba(222, 76, 76, 0.9) !important;
+                }
+
+                /* 3. Personalización de los textos e iconos dentro de las tarjetas */
+                .button h2 { 
+                    color: white !important; 
+                    text-shadow: 0 0 10px #de4c4c, 2px 2px 5px #000 !important; 
+                    font-weight: bold !important;
+                }
+                .button .subtitle { color: #ccc !important; }
+                .icon, .icon svg { 
+                    /* Colorear iconos a rojo neón */
+                    filter: drop-shadow(0 0 8px #de4c4c) !important;
+                    fill: white !important;
+                }
+
+                /* 4. Personalización de los recuadros de configuración de Audio (segunda captura) */
+                .setting-container, .audio-destination-select, #settings-audio-output {
+                    background: rgba(20, 20, 20, 0.9) !important; /* Fondo casi negro */
+                    border: 1px solid #de4c4c !important; 
+                    border-radius: 12px !important;
+                    color: white !important;
+                    box-shadow: 0 0 10px rgba(222, 76, 76, 0.4) !important;
+                }
+                .setting-container h3, .audio-label { color: white !important; }
+                .button-action { background-color: #de4c4c !important; color: white !important; border-radius: 8px !important; } /* Botón 'Test' */
+
+                /* 5. Personalización de la sección 'Things to Note' */
+                #notices { 
+                    background: rgba(20, 20, 20, 0.9) !important; 
+                    border: 1px solid #de4c4c !important; 
+                    color: #ccc !important; 
+                }
+                #notices h3 { color: white !important; }
+
+                /* 6. Personalización del botón 'SELECT SCREEN TO SHARE' (Verde neón) */
+                #action-button { 
+                    background-color: #00ff88 !important; /* Verde neón */
+                    color: black !important; 
+                    font-weight: bold !important; 
+                    border-radius: 10px !important;
+                    box-shadow: 0 0 15px #00ff88 !important;
+                    text-transform: uppercase !important;
+                }
+                #action-button:hover { background-color: #33ffaa !important; }
+
+                /* 7. Icono de cerrar (X) en blanco neón */
+                #close-button, #close-button svg { fill: white !important; filter: drop-shadow(0 0 5px white) !important; }
             `;
 
+            // Codificar el CSS para inyectarlo en la URL
             const encodedCss = encodeURIComponent(customCss);
             
-            // Unimos tu URL original con el nuevo estilo inyectado
+            // Construir la URL final con todos los parámetros de limpieza y el CSS
             const vdoUrl = `https://vdo.ninja/?push=${name}&clean=1&autostart=1&nobanner=1&preview=1&css=${encodedCss}`;
 
+            // Cambiar de vista en la web
             document.getElementById('setup').style.display = 'none';
             document.getElementById('iframeContainer').style.display = 'block';
             document.getElementById('vdoIframe').src = vdoUrl;
