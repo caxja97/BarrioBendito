@@ -5,55 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BarrioBendito - Registro</title>
 <style>
+    /* 1. Fondo principal de la web */
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: #000 url('https://caxja97.github.io/fondo-torneo.png') no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
     body {
-        background-image: url('https://caxja97.github.io/fondo-torneo.png');
-        background-size: cover; 
-        background-position: center; 
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        color: white; 
-        font-family: sans-serif; 
-        margin: 0; 
-        display: flex; 
-        align-items: center; 
-        justify-content: center; 
-        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
     }
+
     .container {
-        max-width: 450px; 
-        background: rgba(15, 15, 15, 0.9); 
-        padding: 40px; 
-        border-radius: 20px; 
-        border: 2px solid #de4c4c; 
-        box-shadow: 0 0 30px rgba(222, 76, 76, 0.5); 
+        max-width: 450px;
+        width: 90%;
+        background: rgba(10, 10, 10, 0.85); /* Un poco más transparente para ver el fondo */
+        padding: 40px;
+        border-radius: 20px;
+        border: 2px solid #de4c4c;
+        box-shadow: 0 0 40px rgba(222, 76, 76, 0.6);
         text-align: center;
+        backdrop-filter: blur(5px); /* Efecto de desenfoque elegante */
     }
-    h1 { color: #de4c4c; font-size: 2.2em; text-transform: uppercase; margin-bottom: 20px; }
+
+    h1 { color: #de4c4c; font-size: 2.2em; text-transform: uppercase; margin-bottom: 20px; text-shadow: 2px 2px 5px black; }
+    
     input, select {
-        padding: 12px; border-radius: 8px; border: 1px solid #30363d;
-        background: rgba(1, 4, 9, 0.8); color: white; width: 100%; 
-        margin-bottom: 20px; text-align: center; box-sizing: border-box; font-size: 15px;
+        padding: 14px; border-radius: 8px; border: 1px solid #444;
+        background: rgba(0, 0, 0, 0.8); color: white; width: 100%; 
+        margin-bottom: 20px; text-align: center; box-sizing: border-box; font-size: 16px;
     }
+
     .btn-main {
         background: #de4c4c; color: white; padding: 18px; border: none;
         border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%;
         text-transform: uppercase; transition: 0.3s; font-size: 16px;
+        box-shadow: 0 4px 15px rgba(222, 76, 76, 0.4);
     }
-    .btn-main:hover { background: #ff5e5e; transform: scale(1.02); }
+
+    .btn-main:hover { background: #ff5e5e; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(222, 76, 76, 0.6); }
+
     .btn-live {
-        display: inline-block; margin-top: 25px; padding: 10px 20px; border: 2px solid #00ff88;
+        display: inline-block; margin-top: 25px; padding: 12px 25px; border: 2px solid #00ff88;
         color: #00ff88; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 13px;
+        transition: 0.3s;
     }
-    #iframeContainer { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1000; }
+    .btn-live:hover { background: #00ff88; color: black; }
+
+    #iframeContainer { display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1000; background: black; }
 </style>
 </head>
 <body>
 
     <div id="setup" class="container">
         <h1>BarrioBendito</h1>
-        <p>Selecciona tu modo de transmisión</p>
+        <p style="margin-bottom: 25px; opacity: 0.9;">Panel de Transmisión Oficial</p>
         
-        <input type="text" id="playerName" placeholder="Tu Nickname...">
+        <input type="text" id="playerName" placeholder="Escribe tu Nickname...">
         
         <select id="playerSlot">
             <optgroup label="TORNEO OFICIAL (Público)">
@@ -68,14 +82,14 @@
                 <option value="puesto9">Puesto 4 (Equipo B)</option>
                 <option value="puesto10">Puesto 5 (Equipo B)</option>
             </optgroup>
-            <optgroup label="EXTRAS / LIBRE (Privado)">
-                <option value="libre">Uso Libre (No aparece en el panel)</option>
+            <optgroup label="MODO LIBRE (Privado)">
+                <option value="libre">Uso Personal / Práctica</option>
             </optgroup>
         </select>
 
-        <button class="btn-main" onclick="iniciarCaptura()">TRANSMITIR AHORA</button>
+        <button class="btn-main" onclick="iniciarCaptura()">EMPEZAR TRANSMISIÓN</button>
         <br>
-        <a href="panel.html" class="btn-live">🔴 VER PANEL EN VIVO (10 PUESTOS)</a>
+        <a href="panel.html" class="btn-live">🔴 VER MULTIVIEW (10 PUESTOS)</a>
     </div>
 
     <div id="iframeContainer">
@@ -86,19 +100,19 @@
         function iniciarCaptura() {
             const name = document.getElementById('playerName').value;
             const slot = document.getElementById('playerSlot').value;
-            if (!name) return alert("Por favor, escribe tu nombre");
+            if (!name) return alert("Por favor, ingresa tu nombre");
 
             const fondoUrl = "https://caxja97.github.io/fondo-torneo.png";
+            // Inyectamos CSS avanzado para que VDO.Ninja respete el arte de BarrioBendito
             const css = encodeURIComponent(`
                 body { 
-                    background-image: url('${fondoUrl}') !important; 
+                    background: #000 url('${fondoUrl}') no-repeat center center fixed !important; 
                     background-size: cover !important; 
-                    background-position: center !important;
-                    background-attachment: fixed !important;
                 }
-                #main, .main-content, .sub-menu { background: rgba(0,0,0,0.4) !important; }
-                .button { background: rgba(20,20,20,0.8) !important; border: 2px solid #de4c4c !important; border-radius: 15px !important; }
+                #main, .main-content, .sub-menu { background: rgba(0,0,0,0.5) !important; backdrop-filter: blur(3px); }
+                .button { background: rgba(30,30,30,0.9) !important; border: 2px solid #de4c4c !important; color: white !important; }
                 h2, p, i, span { color: white !important; text-shadow: 0 0 10px #de4c4c !important; }
+                .close-button { background: #de4c4c !important; color: white !important; }
             `);
 
             document.getElementById('setup').style.display = 'none';
@@ -106,7 +120,7 @@
 
             const roomID = "barriobendito_2026";
             let vdoUrl = (slot === "libre") 
-                ? `https://vdo.ninja/?push=${name}_${Math.floor(Math.random()*1000)}&clean=1&autostart=1&css=${css}`
+                ? `https://vdo.ninja/?push=${name}_${Date.now()}&clean=1&autostart=1&css=${css}`
                 : `https://vdo.ninja/?push=${slot}&label=${name}&room=${roomID}&clean=1&autostart=1&css=${css}`;
             
             document.getElementById('vdoIframe').src = vdoUrl;
